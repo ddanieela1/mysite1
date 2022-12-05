@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+# from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv, find_dotenv,dotenv_values
+
+load_dotenv(find_dotenv())
+from os import environ
+config = dotenv_values('.env')
+print(config, '-------------------')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lby&$k(ty%v2694p)(-5b-&))!u3vn2_=&os)1#he3i8wqp)rk'
+# SECRET_KEY = 'django-insecure-lby&$k(ty%v2694p)(-5b-&))!u3vn2_=&os)1#he3i8wqp)rk'
+SECRET_KEY = config.get('SECRET_KEY')
+print('secret key-->', SECRET_KEY)
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +87,7 @@ WSGI_APPLICATION = 'mysite1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'mypolls',
     }
 }
 
